@@ -23,13 +23,12 @@ class Solution(object):
         """
         if head == None or head.next == None:
             return False
-
-        slow = head.next
-        fast = head.next.next
-        while slow is not fast:
-            if fast == None or fast.next == None:
-                return False
-            slow = slow.next
-            fast = fast.next.next
-            
-        return True
+        
+        prev = head.next
+        curr = head.next.next
+        while curr is not None and curr.next is not None:
+            if curr == prev:
+                return True
+            prev = prev.next
+            curr = curr.next.next
+        return False

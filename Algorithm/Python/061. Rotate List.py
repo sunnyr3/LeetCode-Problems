@@ -27,10 +27,43 @@ rotate 4 steps to the right: 2->0->1->NULL
 #         self.next = None
 
 class Solution:
+    def getLength(self, head):
+        cur = head
+        length = 0
+        while cur:
+            cur = cur.next
+            length += 1
+        return length
+    
+    def rotateList(self, head, k, length):
+        index = 1
+        newNull = head
+        newHead = head.next
+        while index < length - k:
+            newNull = newNull.next
+            newHead = newHead.next
+            index += 1
+            
+        newNull.next = None
+        curr = newHead
+        
+        while curr.next:
+            curr = curr.next
+            
+        curr.next = head
+        
+        return newHead
+    
     def rotateRight(self, head, k):
         """
         :type head: ListNode
         :type k: int
         :rtype: ListNode
         """
-        
+        if head == None:
+            return None
+        length = self.getLength(head)
+        toRotate = k % length
+        if toRotate == 0:
+            return head
+        return self.rotateList(head, toRotate, length)

@@ -24,13 +24,22 @@ Could you do it in-place with O(1) extra space?
 
 class Solution {
 public:
-    void rotate(vector<int>& nums, int k) {
-        int n = nums.size();
-        if (n <= 1 || k == 0) return;
-        if (k > n) k = k % n;
+    void rotate(vector<int>& nums, int k) { 
+        int l = nums.size(); 
+        k = k % l;
+        reverse(nums, 0, l-1);
+        reverse(nums, 0, k-1);
+        reverse(nums, k, l-1);
+        return;        
+    }
 
-        reverse(begin(nums), begin(nums) + n - k);
-        reverse(begin(nums) + n - k, nums.end());
-        reverse(begin(nums), end(nums));
+    void reverse(vector<int>& nums, int start, int end) {
+        while (start < end) {
+            int temp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = temp;
+            start++;
+            end--;
+        }
     }
 };

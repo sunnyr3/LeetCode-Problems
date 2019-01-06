@@ -22,6 +22,45 @@ Could you do it in O(n) time and O(1) space?
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+
+//**************************** 1/4/2019 *********************************
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        if (!head || !head->next) return true;
+        
+        ListNode *slow = head, *fast = head->next;
+        
+        // Split the list into two parts
+        while (fast && fast->next) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        
+        fast = slow->next;
+        slow->next;
+        
+        // Reverse the second part of the list
+        ListNode *prev = NULL, *temp;
+        while (fast) {
+            temp = fast->next;
+            fast->next = prev;
+            prev = fast;
+            fast = temp;
+        }
+        
+        // Compare two parts
+        while (head && prev) {
+            if (head->val != prev->val) return false;
+            head = head->next;
+            prev = prev->next;
+        }
+        
+        return true;
+    }
+};
+
+/********************** Older version **************************
 class Solution {
 public:
     bool isPalindrome(ListNode* head) {
@@ -59,3 +98,4 @@ public:
         return true;
     }
 };
+************************************************************************/
